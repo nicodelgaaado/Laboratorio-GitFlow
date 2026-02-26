@@ -13,6 +13,7 @@
   --shadow: 0 12px 28px rgba(15, 23, 42, 0.12);
   --hero-gradient: linear-gradient(135deg, #e8f2ff 0%, #f7faff 100%);
   --radius: 18px;
+  --ease: cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 [data-theme="dark"] {
@@ -137,10 +138,36 @@ nav a {
   color: var(--text-soft);
   font-weight: 600;
   font-size: 0.95rem;
+  position: relative;
 }
 
 nav a:hover {
   color: var(--accent);
+}
+
+nav a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -0.45rem;
+  width: 100%;
+  height: 2px;
+  background: var(--accent);
+  transform: scaleX(0);
+  transform-origin: left center;
+  opacity: 0.2;
+  transition: transform 0.3s var(--ease), opacity 0.3s var(--ease);
+}
+
+nav a.is-active,
+nav a[aria-current="true"] {
+  color: var(--accent);
+}
+
+nav a.is-active::after,
+nav a[aria-current="true"]::after {
+  transform: scaleX(1);
+  opacity: 1;
 }
 
 main {
@@ -356,6 +383,28 @@ footer {
   .caracteristicas,
   .testimonios {
     grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+/* Scroll Animation Helper */
+.js-scroll .fade-in-up {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.6s var(--ease), transform 0.6s var(--ease);
+  transition-delay: var(--reveal-delay, 0ms);
+  will-change: opacity, transform;
+}
+
+.fade-in-up.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .js-scroll .fade-in-up {
+    opacity: 1;
+    transform: none;
+    transition: none;
   }
 }
 
