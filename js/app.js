@@ -116,10 +116,15 @@
         return "";
       },
       email: (value) => {
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+        const normalizedValue = value.toLowerCase();
+        const emailRegex = /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$/;
 
-        if (!emailRegex.test(value)) {
+        if (!emailRegex.test(normalizedValue)) {
           return "Ingresa un correo electrónico válido.";
+        }
+
+        if (normalizedValue.includes("..")) {
+          return "El correo no puede contener puntos consecutivos.";
         }
 
         return "";
