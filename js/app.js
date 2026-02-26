@@ -6,6 +6,7 @@
     ".beneficio",
     ".caracteristica",
     ".testimonio",
+    ".cv-card",
     ".form-group"
   ];
 
