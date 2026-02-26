@@ -444,6 +444,36 @@
     });
   };
 
+  const initMicroInteractions = () => {
+    const rippleTargets = document.querySelectorAll(
+      'button, .cta-modal__action, .cta-modal__close, nav a, .beneficio, .caracteristica, .testimonio, .cv-card'
+    );
+
+    rippleTargets.forEach((target) => {
+      target.classList.add("ripple-target", "interactive-surface");
+
+      target.addEventListener("click", (event) => {
+        const targetRect = target.getBoundingClientRect();
+        const ripple = document.createElement("span");
+        const size = Math.max(targetRect.width, targetRect.height) * 1.25;
+        const x = event.clientX - targetRect.left - size / 2;
+        const y = event.clientY - targetRect.top - size / 2;
+
+        ripple.className = "ripple-ink";
+        ripple.style.width = `${size}px`;
+        ripple.style.height = `${size}px`;
+        ripple.style.left = `${x}px`;
+        ripple.style.top = `${y}px`;
+
+        target.appendChild(ripple);
+
+        ripple.addEventListener("animationend", () => {
+          ripple.remove();
+        });
+      });
+    });
+  };
+
   const initScrollAnimations = () => {
     const elements = document.querySelectorAll(revealTargets.join(","));
 
@@ -488,6 +518,7 @@
     initSmoothScroll();
     initFormValidation();
     initCTAInteraction();
+    initMicroInteractions();
     initScrollAnimations();
   };
 
