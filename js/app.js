@@ -152,6 +152,12 @@
       }
     };
 
+    const requiredMessages = {
+      nombre: "El nombre completo es obligatorio.",
+      email: "El correo electrónico es obligatorio.",
+      mensaje: "El mensaje es obligatorio."
+    };
+
     const getMessageElement = (field) => {
       const group = field.closest(".form-group");
 
@@ -207,7 +213,8 @@
       const isRequired = field.hasAttribute("required");
 
       if (isRequired && !rawValue) {
-        return setFieldState(field, "Este campo es obligatorio.");
+        const customRequiredMessage = name ? requiredMessages[name] : null;
+        return setFieldState(field, customRequiredMessage || "Este campo es obligatorio.");
       }
 
       const validator = name ? rules[name] : null;
