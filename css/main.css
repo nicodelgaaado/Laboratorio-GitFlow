@@ -24,6 +24,7 @@
   --radius-lg: 1.5rem;
   --shadow-soft: 0 8px 24px rgba(12, 32, 86, 0.08);
   --shadow-float: 0 20px 50px rgba(12, 32, 86, 0.16);
+  --ease: cubic-bezier(0.4, 0, 0.2, 1);
   --transition: 220ms ease;
   --transition-slow: 360ms ease;
   --ripple-color: rgba(255, 255, 255, 0.45);
@@ -445,6 +446,82 @@ header nav a:focus-visible {
 .cv-card a:hover,
 .cv-card a:focus-visible {
   color: #083d96;
+}
+
+/* ========================================
+   Microinteractions (Performance-first)
+======================================== */
+:root {
+  --transition-controlled: transform 300ms var(--ease), box-shadow 300ms var(--ease), border-color 300ms var(--ease);
+  --shadow-lift: 0 18px 34px rgba(0, 0, 0, 0.12);
+  --shadow-lift-strong: 0 24px 42px rgba(0, 0, 0, 0.16);
+}
+
+.beneficio,
+.caracteristica,
+.testimonio,
+.cv-card,
+.btn-primary {
+  transition: var(--transition-controlled);
+  transform: translateZ(0);
+  backface-visibility: hidden;
+}
+
+.beneficio,
+.caracteristica,
+.testimonio,
+.cv-card {
+  position: relative;
+  transform-style: preserve-3d;
+  overflow: hidden;
+}
+
+.beneficio::before,
+.caracteristica::before,
+.testimonio::before,
+.cv-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(120deg, rgba(255, 255, 255, 0.22), rgba(255, 255, 255, 0));
+  opacity: 0;
+  transform: translateY(6px);
+  transition: opacity 260ms var(--ease), transform 260ms var(--ease);
+  pointer-events: none;
+}
+
+@media (hover: hover) {
+  .beneficio:hover,
+  .caracteristica:hover,
+  .testimonio:hover,
+  .cv-card:hover {
+    box-shadow: var(--shadow-lift);
+    transform: translateY(-8px) rotateX(1.5deg) rotateY(-1.5deg);
+  }
+
+  .beneficio:hover::before,
+  .caracteristica:hover::before,
+  .testimonio:hover::before,
+  .cv-card:hover::before {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .btn-primary:hover {
+    box-shadow: var(--shadow-lift-strong);
+    transform: translateY(-3px) scale(1.01);
+  }
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .beneficio:hover,
+  .caracteristica:hover,
+  .testimonio:hover,
+  .cv-card:hover,
+  .btn-primary:hover {
+    will-change: transform;
+  }
 }
 
 /* ========================================
