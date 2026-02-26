@@ -11,8 +11,13 @@
   --accent-strong: #0066d6;
   --border: #d7deea;
   --shadow: 0 12px 28px rgba(15, 23, 42, 0.12);
+  --shadow-lift: 0 18px 34px rgba(15, 23, 42, 0.16);
+  --shadow-lift-strong: 0 28px 46px rgba(15, 23, 42, 0.2);
   --hero-gradient: linear-gradient(135deg, #e8f2ff 0%, #f7faff 100%);
   --radius: 18px;
+  --ease: cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-control: transform 280ms var(--ease), box-shadow 280ms var(--ease), border-color 280ms var(--ease);
+  --ripple-color: rgba(255, 255, 255, 0.42);
 }
 
 [data-theme="dark"] {
@@ -249,6 +254,83 @@ main > section {
   color: var(--accent-strong);
 }
 
+/* Microinteracciones reutilizables (Dev 4) */
+.interactive-surface {
+  position: relative;
+  overflow: hidden;
+  transform: translateZ(0);
+  transition: var(--transition-control);
+}
+
+.interactive-surface::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(120deg, rgba(255, 255, 255, 0.18), rgba(255, 255, 255, 0));
+  opacity: 0;
+  transform: translateY(6px);
+  transition: opacity 260ms var(--ease), transform 260ms var(--ease);
+  pointer-events: none;
+}
+
+.interactive-surface > * {
+  position: relative;
+  z-index: 1;
+}
+
+.ripple-target {
+  isolation: isolate;
+}
+
+.ripple-ink {
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+  background: radial-gradient(circle, var(--ripple-color) 0%, rgba(255, 255, 255, 0) 65%);
+  transform: scale(0);
+  opacity: 0.92;
+  animation: ripple-expand 620ms ease-out forwards;
+  z-index: 0;
+}
+
+@media (hover: hover) {
+  .beneficio.interactive-surface:hover,
+  .caracteristica.interactive-surface:hover,
+  .testimonio.interactive-surface:hover,
+  .perfil-card.interactive-surface:hover {
+    transform: translateY(-8px) rotateX(1.5deg) rotateY(-1.5deg);
+    box-shadow: var(--shadow-lift);
+    border-color: color-mix(in srgb, var(--accent) 50%, var(--border));
+  }
+
+  nav a.interactive-surface:hover,
+  nav a.interactive-surface:focus-visible {
+    transform: translateY(-2px);
+  }
+
+  .interactive-surface:hover::before,
+  .interactive-surface:focus-visible::before {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  button[type="submit"].interactive-surface:hover {
+    transform: translateY(-3px) scale(1.01);
+    box-shadow: var(--shadow-lift-strong);
+  }
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .beneficio:hover,
+  .caracteristica:hover,
+  .testimonio:hover,
+  .perfil-card:hover,
+  button[type="submit"]:hover {
+    will-change: transform;
+  }
+}
+
 .formulario-contacto > p {
   color: var(--text-soft);
   margin-bottom: 1rem;
@@ -294,10 +376,67 @@ button[type="submit"] {
   color: #ffffff;
   font-weight: 700;
   cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.55rem;
+  transition: var(--transition-control);
 }
 
 button[type="submit"]:hover {
   background: var(--accent-strong);
+}
+
+button[type="submit"]:disabled {
+  opacity: 0.82;
+  cursor: not-allowed;
+}
+
+.submit-label {
+  transition: opacity 180ms ease;
+}
+
+.submit-loader {
+  width: 1rem;
+  height: 1rem;
+  border-radius: 50%;
+  border: 2px solid rgba(255, 255, 255, 0.4);
+  border-top-color: #fff;
+  opacity: 0;
+  transform: scale(0.76);
+  transition: opacity 180ms ease, transform 180ms ease;
+  animation: loader-spin 680ms linear infinite;
+  animation-play-state: paused;
+}
+
+button[type="submit"].is-loading .submit-loader {
+  opacity: 1;
+  transform: scale(1);
+  animation-play-state: running;
+}
+
+button[type="submit"].is-loading .submit-label {
+  opacity: 0.92;
+}
+
+.form-feedback {
+  margin-top: -0.2rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+  transition: opacity 220ms var(--ease), color 220ms var(--ease), transform 220ms var(--ease);
+}
+
+.form-feedback.loading {
+  color: var(--accent);
+  transform: translateY(-1px);
+}
+
+.form-feedback.success {
+  color: #0f8f43;
+}
+
+.form-feedback.error {
+  color: #c6334d;
 }
 
 footer {
@@ -379,6 +518,16 @@ footer {
     transform: none;
     transition: none;
   }
+
+  .interactive-surface,
+  .interactive-surface::before,
+  .ripple-ink,
+  button[type="submit"],
+  .form-feedback {
+    animation: none !important;
+    transition: none !important;
+    transform: none !important;
+  }
 }
 
 @media (max-width: 640px) {
@@ -389,5 +538,25 @@ footer {
 
   main > section {
     padding: 1.2rem;
+  }
+}
+
+@keyframes ripple-expand {
+  from {
+    transform: scale(0);
+    opacity: 0.85;
+  }
+  to {
+    transform: scale(1);
+    opacity: 0;
+  }
+}
+
+@keyframes loader-spin {
+  from {
+    transform: scale(1) rotate(0deg);
+  }
+  to {
+    transform: scale(1) rotate(360deg);
   }
 }
