@@ -1,11 +1,9 @@
 /* =====================================================
    GOOGLE FONT & SETTINGS
-===================================================== */
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
 
 /* =====================================================
    ROOT SYSTEM (Premium Design System)
-===================================================== */
 :root {
   /* Palette - Pure Apple/Stripe */
   --primary: #0071e3;
@@ -42,7 +40,6 @@
 
 /* =====================================================
    RESET & REFINEMENT
-===================================================== */
 * {
   margin: 0;
   padding: 0;
@@ -65,7 +62,6 @@ body {
 
 /* =====================================================
    REUSABLE COMPONENTS
-===================================================== */
 .section-tag {
   display: inline-block;
   padding: 6px 16px;
@@ -85,7 +81,6 @@ body {
 
 /* =====================================================
    HEADER – Frosted Glass Premium
-===================================================== */
 header {
   position: sticky;
   top: 0;
@@ -171,7 +166,6 @@ header nav a[aria-current="true"]::after {
 
 /* =====================================================
    HERO – SaaS Impact
-===================================================== */
 .hero {
   padding: 10rem 1.5rem 6rem;
   text-align: center;
@@ -222,7 +216,6 @@ header nav a[aria-current="true"]::after {
 
 /* =====================================================
    LAYOUT GRID SYSTEM (Bento Style)
-===================================================== */
 .grid-system {
   display: grid;
   grid-template-columns: 1fr;
@@ -261,7 +254,6 @@ header nav a[aria-current="true"]::after {
 
 /* =====================================================
    TESTIMONIOS – Stripe Style
-===================================================== */
 .testimonios {
   background: var(--dark);
   color: var(--light);
@@ -303,7 +295,6 @@ header nav a[aria-current="true"]::after {
 
 /* =====================================================
    CTA FORM – Modern Dark
-===================================================== */
 .cta-section {
   padding: 8rem 1.5rem;
 }
@@ -367,7 +358,6 @@ input:focus {
 
 /* =====================================================
    RESPONSIVE & ANIMATIONS
-==================================================== */
 @media (min-width: 768px) {
   .grid-system.cols-2 { grid-template-columns: repeat(2, 1fr); }
   .grid-system.cols-3 { grid-template-columns: repeat(3, 1fr); }
@@ -391,13 +381,23 @@ input:focus {
 }
 
 /* Scroll Animation Helper */
-.fade-in-up {
+.js-scroll .fade-in-up {
   opacity: 0;
-  transform: translateY(20px);
+  transform: translateY(24px);
   transition: opacity 0.6s var(--ease), transform 0.6s var(--ease);
+  transition-delay: var(--reveal-delay, 0ms);
+  will-change: opacity, transform;
 }
 
 .fade-in-up.visible {
   opacity: 1;
   transform: translateY(0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .js-scroll .fade-in-up {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
 }
