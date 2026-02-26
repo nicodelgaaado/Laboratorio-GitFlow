@@ -362,13 +362,23 @@ input:focus {
 }
 
 /* Scroll Animation Helper */
-.fade-in-up {
+.js-scroll .fade-in-up {
   opacity: 0;
-  transform: translateY(20px);
+  transform: translateY(24px);
   transition: opacity 0.6s var(--ease), transform 0.6s var(--ease);
+  transition-delay: var(--reveal-delay, 0ms);
+  will-change: opacity, transform;
 }
 
 .fade-in-up.visible {
   opacity: 1;
   transform: translateY(0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .js-scroll .fade-in-up {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
 }
