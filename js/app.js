@@ -229,9 +229,7 @@
       });
 
       field.addEventListener("input", () => {
-        if (field.closest(".form-group")?.classList.contains("has-error") || field.value.trim()) {
-          validateField(field);
-        }
+        validateField(field);
       });
     });
 
