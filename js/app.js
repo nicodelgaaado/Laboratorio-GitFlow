@@ -104,6 +104,7 @@
 
     const fields = form.querySelectorAll("input, textarea");
     const submitButton = form.querySelector('button[type="submit"]');
+    let isSubmitting = false;
 
     const rules = {
       nombre: (value) => {
@@ -234,8 +235,10 @@
       }
 
       const canSubmit = Array.from(fields).every((field) => !getFieldError(field));
-      submitButton.disabled = !canSubmit;
-      submitButton.setAttribute("aria-disabled", String(!canSubmit));
+      const shouldDisable = isSubmitting || !canSubmit;
+
+      submitButton.disabled = shouldDisable;
+      submitButton.setAttribute("aria-disabled", String(shouldDisable));
     };
 
     const getFeedbackElement = () => {
@@ -249,6 +252,50 @@
 
       return feedback;
     };
+
+    const wait = (timeMs) => new Promise((resolve) => {
+      window.setTimeout(resolve, timeMs);
+    });
+
+    const ensureSubmitDecorators = () => {
+      if (!submitButton) {
+        return;
+      }
+
+      let label = submitButton.querySelector(".submit-label");
+
+      if (!label) {
+        label = document.createElement("span");
+        label.className = "submit-label";
+        label.textContent = submitButton.textContent.trim();
+        submitButton.textContent = "";
+        submitButton.appendChild(label);
+      }
+
+      let loader = submitButton.querySelector(".submit-loader");
+
+      if (!loader) {
+        loader = document.createElement("span");
+        loader.className = "submit-loader";
+        loader.setAttribute("aria-hidden", "true");
+        submitButton.appendChild(loader);
+      }
+    };
+
+    const setSubmittingState = (status) => {
+      isSubmitting = status;
+
+      form.classList.toggle("is-submitting", status);
+      form.setAttribute("aria-busy", String(status));
+
+      if (submitButton) {
+        submitButton.classList.toggle("is-loading", status);
+      }
+
+      updateSubmitState();
+    };
+
+    ensureSubmitDecorators();
 
     fields.forEach((field) => {
       field.addEventListener("blur", () => {
@@ -264,8 +311,12 @@
 
     updateSubmitState();
 
-    form.addEventListener("submit", (event) => {
+    form.addEventListener("submit", async (event) => {
       event.preventDefault();
+
+      if (isSubmitting) {
+        return;
+      }
 
       const feedback = getFeedbackElement();
       let firstInvalidField = null;
@@ -286,7 +337,7 @@
       if (!allValid) {
         feedback.textContent = "Corrige los campos marcados para continuar.";
         feedback.classList.add("error");
-        feedback.classList.remove("success");
+        feedback.classList.remove("success", "loading");
 
         if (firstInvalidField) {
           firstInvalidField.focus();
@@ -295,12 +346,25 @@
         return;
       }
 
+      feedback.textContent = "Enviando mensaje...";
+      feedback.classList.add("loading");
+      feedback.classList.remove("error", "success");
+
+      setSubmittingState(true);
+      await wait(1300);
+
       feedback.textContent = "Mensaje enviado correctamente. Te contactaremos pronto.";
       feedback.classList.add("success");
-      feedback.classList.remove("error");
+      feedback.classList.remove("error", "loading");
+
+      form.classList.add("is-submitted");
+      await wait(900);
 
       form.reset();
       fields.forEach((field) => setFieldState(field, ""));
+      form.classList.remove("is-submitted");
+
+      setSubmittingState(false);
       updateSubmitState();
     });
   };
