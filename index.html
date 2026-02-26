@@ -18,7 +18,10 @@
         </div>
         
         <!-- NAV: Barra de navegación -->
-        <nav>
+        <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="main-navigation">
+            Menú
+        </button>
+        <nav id="main-navigation">
             <ul>
                 <li><a href="#hero">Inicio</a></li>
                 <li><a href="#beneficios">Beneficios</a></li>
@@ -38,6 +41,7 @@
                 <p>Tecnología de vanguardia en la palma de tu mano.</p>
                 <img src="img-01/icons8-mac-os-24.png" alt="iPhone 17 Pro Max - Último modelo Apple">
                 <p><strong>Obtén hasta $180 – $650 en crédito</strong> al intercambiar tu iPhone 13 o superior.</p>
+                <button type="button" class="cta-btn" id="cta-btn">Quiero Asesoría Personalizada</button>
             </article>
         </section>
 
@@ -186,5 +190,6 @@
         </section>
     </footer>
 
+    <script src="js/app.js" defer></script>
 </body>
 </html>
