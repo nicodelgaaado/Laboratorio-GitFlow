@@ -4,47 +4,48 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    
     <title>Apple - Innovación y Tecnología</title>
     <link rel="stylesheet" href="css/main.css">
-
 </head>
 <body>
-    <!-- HEADER: Encabezado con navegación -->
     <header>
         <div class="header-top">
-            <img src="img-01/icons8-mac-os-24.png" alt="Logo de Apple">
-            <h1>Apple</h1>
+            <a href="#hero" class="brand">
+                <img src="img-01/icons8-mac-os-24.png" alt="Logo de Apple">
+                <h1>Apple</h1>
+            </a>
+
+            <button id="theme-toggle" class="theme-toggle" type="button" aria-label="Activar modo oscuro">
+                <i class="fas fa-moon" aria-hidden="true"></i>
+                <span>Modo oscuro</span>
+            </button>
         </div>
-        
-        <!-- NAV: Barra de navegación -->
+
         <nav>
             <ul>
                 <li><a href="#hero">Inicio</a></li>
                 <li><a href="#beneficios">Beneficios</a></li>
                 <li><a href="#caracteristicas">Características</a></li>
                 <li><a href="#testimonios">Testimonios</a></li>
+                <li><a href="#hojas-vida">Hojas de vida</a></li>
                 <li><a href="#contacto">Contacto</a></li>
             </ul>
         </nav>
     </header>
 
-    <!-- MAIN: Contenido principal -->
     <main>
-        <!-- SECTION: Hero principal -->
         <section id="hero" class="hero">
             <article>
                 <h2>Nuevos iPhone 17 Pro Max</h2>
                 <p>Tecnología de vanguardia en la palma de tu mano.</p>
                 <img src="img-01/icons8-mac-os-24.png" alt="iPhone 17 Pro Max - Último modelo Apple">
-                <p><strong>Obtén hasta $180 – $650 en crédito</strong> al intercambiar tu iPhone 13 o superior.</p>
+                <p><strong>Obtén hasta $180 - $650 en crédito</strong> al intercambiar tu iPhone 13 o superior.</p>
             </article>
         </section>
 
-        <!-- SECTION: Beneficios (mínimo 3) -->
         <section id="beneficios" class="beneficios">
             <h2>Beneficios de Apple</h2>
-            
+
             <article class="beneficio">
                 <h3>Rendimiento Excepcional</h3>
                 <img src="img-01/icons8-mac-os-24.png" alt="Icono de velocidad y rendimiento">
@@ -70,10 +71,9 @@
             </article>
         </section>
 
-        <!-- SECTION: Características principales -->
         <section id="caracteristicas" class="caracteristicas">
             <h2>Características Principales</h2>
-            
+
             <article class="caracteristica">
                 <h3>Diseño Premium</h3>
                 <p>Cuerpo de titanio quirúrgico de grado médico con acabado mate resistente a huellas dactilares.</p>
@@ -95,10 +95,9 @@
             </article>
         </section>
 
-        <!-- SECTION: Testimonios de clientes -->
         <section id="testimonios" class="testimonios">
             <h2>Lo que Dicen Nuestros Clientes</h2>
-            
+
             <article class="testimonio">
                 <h3>María García</h3>
                 <p><em>"El iPhone 17 Pro cambió mi forma de trabajar. La cámara es increíble y la batería dura todo el día."</em></p>
@@ -118,11 +117,54 @@
             </article>
         </section>
 
-        <!-- SECTION: Formulario de contacto -->
+        <section id="hojas-vida" class="hojas-vida">
+            <h2>Hoja de Vida</h2>
+
+            <article class="perfil-card">
+                <header class="perfil-header">
+                    <img src="img-01/icons8-mac-os-24.png" alt="Foto de perfil">
+                    <div>
+                        <h3>Nicolás Estudiante</h3>
+                        <p>Desarrollador web en formación</p>
+                    </div>
+                </header>
+
+                <div class="perfil-grid">
+                    <section>
+                        <h4>Datos personales</h4>
+                        <ul>
+                            <li><strong>Ciudad:</strong> Bogotá, Colombia</li>
+                            <li><strong>Correo:</strong> nicolas@example.com</li>
+                            <li><strong>Teléfono:</strong> +57 300 000 0000</li>
+                            <li><strong>Perfil:</strong> Enfoque en frontend, Git y desarrollo con frameworks web.</li>
+                        </ul>
+                    </section>
+
+                    <section>
+                        <h4>Formación</h4>
+                        <ul>
+                            <li>Tecnología en desarrollo de software - En curso</li>
+                            <li>Curso de Git y GitFlow aplicado a equipos</li>
+                            <li>Curso de HTML, CSS y JavaScript moderno</li>
+                        </ul>
+                    </section>
+
+                    <section>
+                        <h4>Repositorios</h4>
+                        <ul class="repos-list">
+                            <li><a href="https://github.com/" target="_blank" rel="noopener noreferrer">GitHub principal</a></li>
+                            <li><a href="https://github.com/" target="_blank" rel="noopener noreferrer">Proyecto portafolio web</a></li>
+                            <li><a href="https://github.com/" target="_blank" rel="noopener noreferrer">Laboratorio GitFlow</a></li>
+                        </ul>
+                    </section>
+                </div>
+            </article>
+        </section>
+
         <section id="contacto" class="formulario-contacto">
             <h2>Formulario de Contacto</h2>
             <p>¿Tienes preguntas? Contáctanos y te responderemos pronto.</p>
-            
+
             <form>
                 <div class="form-group">
                     <label for="nombre">Nombre Completo:</label>
@@ -149,33 +191,35 @@
         </section>
     </main>
 
-    <!-- FOOTER: Pie de página con redes sociales -->
     <footer>
         <section class="footer-content">
             <h3>Apple Inc.</h3>
             <p>&copy; 2026 Apple Inc. Todos los derechos reservados.</p>
 
-            <!-- Redes sociales -->
             <h4>Síguenos en Redes Sociales</h4>
             <nav class="redes-sociales">
                 <ul>
-                    <a href="https://www.instagram.com/Apple" target="_blank">
-                        <i class="fab fa-instagram"></i>
-                        
-                    </a>
-                    
-                    <a href="https://www.twitter.com/Apple" target="_blank">
-                        <i class="fab fa-twitter"></i>                        
-                    </a>
-                    
-                    <a href="https://www.linkedin.com/company/Apple" target="_blank">
-                        <i class="fab fa-linkedin-in"></i>
-                    </a>
-                
+                    <li>
+                        <a href="https://www.instagram.com/Apple" target="_blank" rel="noopener noreferrer">
+                            <i class="fab fa-instagram"></i>
+                            <span>Instagram</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://www.twitter.com/Apple" target="_blank" rel="noopener noreferrer">
+                            <i class="fab fa-twitter"></i>
+                            <span>Twitter</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://www.linkedin.com/company/Apple" target="_blank" rel="noopener noreferrer">
+                            <i class="fab fa-linkedin-in"></i>
+                            <span>LinkedIn</span>
+                        </a>
+                    </li>
                 </ul>
             </nav>
 
-            <!-- Enlaces útiles -->
             <div class="footer-links">
                 <ul>
                     <li><a href="#privacidad">Privacidad</a></li>
@@ -185,6 +229,8 @@
             </div>
         </section>
     </footer>
+
+    <script src="js/theme.js"></script>
     <script src="js/active-link-highlight.js" defer></script>
 </body>
 </html>
