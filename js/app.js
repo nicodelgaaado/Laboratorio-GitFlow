@@ -102,6 +102,7 @@
     form.setAttribute("novalidate", "");
 
     const fields = form.querySelectorAll("input, textarea");
+    const submitButton = form.querySelector('button[type="submit"]');
 
     const rules = {
       nombre: (value) => {
@@ -207,20 +208,33 @@
       return !hasError;
     };
 
-    const validateField = (field) => {
+    const getFieldError = (field) => {
       const name = field.getAttribute("name");
       const rawValue = field.value.trim();
       const isRequired = field.hasAttribute("required");
 
       if (isRequired && !rawValue) {
         const customRequiredMessage = name ? requiredMessages[name] : null;
-        return setFieldState(field, customRequiredMessage || "Este campo es obligatorio.");
+        return customRequiredMessage || "Este campo es obligatorio.";
       }
 
       const validator = name ? rules[name] : null;
-      const errorMessage = validator ? validator(rawValue) : "";
+      return validator ? validator(rawValue) : "";
+    };
 
+    const validateField = (field) => {
+      const errorMessage = getFieldError(field);
       return setFieldState(field, errorMessage);
+    };
+
+    const updateSubmitState = () => {
+      if (!submitButton) {
+        return;
+      }
+
+      const canSubmit = Array.from(fields).every((field) => !getFieldError(field));
+      submitButton.disabled = !canSubmit;
+      submitButton.setAttribute("aria-disabled", String(!canSubmit));
     };
 
     const getFeedbackElement = () => {
@@ -238,12 +252,16 @@
     fields.forEach((field) => {
       field.addEventListener("blur", () => {
         validateField(field);
+        updateSubmitState();
       });
 
       field.addEventListener("input", () => {
         validateField(field);
+        updateSubmitState();
       });
     });
+
+    updateSubmitState();
 
     form.addEventListener("submit", (event) => {
       event.preventDefault();
@@ -282,6 +300,7 @@
 
       form.reset();
       fields.forEach((field) => setFieldState(field, ""));
+      updateSubmitState();
     });
   };
 
