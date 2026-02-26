@@ -473,6 +473,16 @@ header nav a:focus-visible {
   padding: 1.4rem;
   display: grid;
   gap: 1rem;
+  transition: opacity var(--transition), transform var(--transition), box-shadow var(--transition);
+}
+
+.formulario-contacto form.is-submitting {
+  opacity: 0.9;
+  transform: translateY(2px);
+}
+
+.formulario-contacto form.is-submitted {
+  animation: form-pop 320ms ease;
 }
 
 .form-group {
@@ -519,6 +529,10 @@ header nav a:focus-visible {
   cursor: pointer;
   position: relative;
   isolation: isolate;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.55rem;
   background: linear-gradient(140deg, var(--primary), var(--accent));
   box-shadow: 0 12px 22px rgba(18, 95, 210, 0.28);
   transition: transform var(--transition), box-shadow var(--transition), filter var(--transition);
@@ -541,6 +555,42 @@ header nav a:focus-visible {
 
 .formulario-contacto button[type="submit"]:active {
   transform: translateY(-1px);
+}
+
+.formulario-contacto button[type="submit"]:disabled {
+  cursor: not-allowed;
+  filter: saturate(0.7);
+}
+
+.submit-label {
+  transition: opacity var(--transition);
+}
+
+.submit-loader {
+  width: 1rem;
+  height: 1rem;
+  border-radius: 50%;
+  border: 2px solid rgba(255, 255, 255, 0.45);
+  border-top-color: #ffffff;
+  opacity: 0;
+  transform: scale(0.75);
+  transition: opacity 180ms ease, transform 180ms ease;
+  animation: loader-spin 650ms linear infinite;
+  animation-play-state: paused;
+}
+
+.formulario-contacto button[type="submit"].is-loading {
+  animation: sending-pulse 900ms ease-in-out infinite;
+}
+
+.formulario-contacto button[type="submit"].is-loading .submit-loader {
+  opacity: 1;
+  transform: scale(1);
+  animation-play-state: running;
+}
+
+.formulario-contacto button[type="submit"].is-loading .submit-label {
+  opacity: 0.92;
 }
 
 .form-group.has-error input,
@@ -584,6 +634,13 @@ header nav a:focus-visible {
   margin-top: -0.25rem;
   font-size: 0.9rem;
   font-weight: 600;
+  transition: color var(--transition), opacity var(--transition), transform var(--transition);
+}
+
+.form-feedback.loading {
+  color: var(--primary-strong);
+  opacity: 0.95;
+  transform: translateY(-1px);
 }
 
 .form-feedback.error {
@@ -861,6 +918,33 @@ footer {
   }
   100% {
     transform: translateX(0);
+  }
+}
+
+@keyframes loader-spin {
+  from {
+    transform: scale(1) rotate(0deg);
+  }
+  to {
+    transform: scale(1) rotate(360deg);
+  }
+}
+
+@keyframes sending-pulse {
+  from {
+    filter: brightness(1);
+  }
+  to {
+    filter: brightness(1.08);
+  }
+}
+
+@keyframes form-pop {
+  0% {
+    transform: scale(0.995);
+  }
+  100% {
+    transform: scale(1);
   }
 }
 
